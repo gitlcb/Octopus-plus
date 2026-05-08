@@ -346,11 +346,18 @@ func (ra *relayAttempt) attempt() attemptResult {
 
 	// ====== 失败 ======
 	if isClientCancellation(ra.requestContext(), fwdErr) {
+		written := ra.streamPayloadWritten.Load()
+		if written {
+			ra.collectResponse()
+		}
+		op.ChannelKeyUpdate(ra.usedKey)
+		span.End(dbmodel.AttemptFailed, statusCode, fwdErr.Error())
 		return attemptResult{
-			Success:  false,
-			Written:  false,
-			Canceled: true,
-			Err:      fwdErr,
+			Success:    false,
+			Written:    written,
+			Canceled:   true,
+			Err:        fwdErr,
+			StatusCode: statusCode,
 		}
 	}
 
@@ -933,11 +940,12 @@ func (ra *relayAttempt) handleStreamResponse(ctx context.Context, response *http
 	for {
 		select {
 		case <-ctx.Done():
-			if isLocalRelayBudgetExceeded(ctx, contextError(ctx)) {
-				return contextError(ctx)
+			err := contextError(ctx)
+			if isLocalRelayBudgetExceeded(ctx, err) {
+				return err
 			}
-			log.Infof("client disconnected, stopping stream")
-			return nil
+			log.Infof("client disconnected, stopping stream: written=%t first_token_seen=%t elapsed=%s", ra.streamPayloadWritten.Load(), !firstToken, time.Since(ra.metrics.StartTime))
+			return err
 		case <-firstTokenC:
 			log.Warnf("first token timeout (%ds), switching channel", ra.firstTokenTimeOutSec)
 			_ = response.Body.Close()
@@ -1242,11 +1250,15 @@ func (ra *relayAttempt) handleStreamResponsePassthroughOpenAIResponses(ctx conte
 	for {
 		select {
 		case <-ctx.Done():
-			if isLocalRelayBudgetExceeded(ctx, contextError(ctx)) {
-				return contextError(ctx)
+			err := contextError(ctx)
+			if isLocalRelayBudgetExceeded(ctx, err) {
+				return err
 			}
-			log.Infof("client disconnected, stopping stream")
-			return nil
+			log.Infof("client disconnected, stopping stream: written=%t raw_bytes=%d first_token_seen=%t elapsed=%s", ra.streamPayloadWritten.Load(), rawStream.Len(), !firstToken, time.Since(ra.metrics.StartTime))
+			if rawStream.Len() > 0 {
+				ra.collectOpenAIResponsesPassthroughMetrics(context.Background(), rawStream.Bytes())
+			}
+			return err
 		case <-firstTokenC:
 			log.Warnf("first token timeout (%ds), switching channel", ra.firstTokenTimeOutSec)
 			_ = response.Body.Close()
@@ -1523,11 +1535,16 @@ func (ra *relayAttempt) handleStreamResponsePassthroughAnthropic(ctx context.Con
 	for {
 		select {
 		case <-ctx.Done():
-			if isLocalRelayBudgetExceeded(ctx, contextError(ctx)) {
-				return contextError(ctx)
+			err := contextError(ctx)
+			if isLocalRelayBudgetExceeded(ctx, err) {
+				return err
 			}
-			log.Infof("client disconnected, stopping stream")
-			return nil
+			log.Infof("client disconnected, stopping stream: written=%t raw_bytes=%d first_token_seen=%t elapsed=%s", ra.streamPayloadWritten.Load(), rawStream.Len(), !firstToken, time.Since(ra.metrics.StartTime))
+			if rawStream.Len() > 0 {
+				ra.collectAnthropicPassthroughMetrics(context.Background(), rawStream.Bytes())
+				ra.collectResponse()
+			}
+			return err
 		case <-firstTokenC:
 			log.Warnf("first token timeout (%ds), switching channel", ra.firstTokenTimeOutSec)
 			_ = response.Body.Close()
