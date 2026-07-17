@@ -10,7 +10,7 @@
 > If you just want a quick start, jump to [II. 5-Minute Quick Start](#ii-5-minute-quick-start).
 > If you run into problems, check [XIII. FAQ](#xiii-frequently-asked-questions) first — most common pitfalls are covered there.
 >
-> For deployment details, configuration files, and cross-platform builds, see [README.md](README.md).
+> For deployment details, configuration files, and cross-platform builds, see [README_en.md](README_en.md).
 
 ---
 
@@ -114,7 +114,7 @@ wget https://raw.githubusercontent.com/Hureru/octopus/refs/heads/dev/docker-comp
 docker compose up -d
 ```
 
-> ⚠️ **You must use the `hureru/octopus` image** (the version with Site functionality). If you use `bestrui/octopus` or other upstream images, you won't see the "Sites" page. For Release binaries and building from source, see [README.md](README.md).
+> ⚠️ **You must use the `hureru/octopus` image** (the version with Site functionality). If you use `bestrui/octopus` or other upstream images, you won't see the "Sites" page. For Release binaries and building from source, see [README_en.md](README_en.md).
 
 ### 4.2 First Login
 
@@ -396,7 +396,7 @@ base_url = "http://127.0.0.1:8080/v1"
 { "OPENAI_API_KEY": "sk-octopus-xxxx" }
 ```
 
-> For more client examples, see [README.md Client Integration](README.md).
+> For more client examples, see [README_en.md Client Integration](README_en.md).
 
 ---
 

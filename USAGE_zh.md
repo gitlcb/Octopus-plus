@@ -10,7 +10,7 @@
 > 如果你只想快速跑通，请直接看 [二、5 分钟跑通最短路径](#二5-分钟跑通最短路径)；
 > 遇到问题先翻 [十三、高频问题 FAQ](#十三高频问题-faq)，常见的坑基本都在里面。
 >
-> 部署细节、配置文件、跨平台编译等参见 [README_zh.md](README_zh.md)，本文不再重复。
+> 部署细节、配置文件、跨平台编译等参见 [README.md](README.md)，本文不再重复。
 
 ---
 
@@ -114,7 +114,7 @@ wget https://raw.githubusercontent.com/Hureru/octopus/refs/heads/dev/docker-comp
 docker compose up -d
 ```
 
-> ⚠️ **镜像一定要用 `hureru/octopus`**（带站点功能的版本）。如果你用的是 `bestrui/octopus` 等原版镜像，是看不到"站点"页面的。Release 二进制、源码编译方式见 [README_zh.md](README_zh.md)。
+> ⚠️ **镜像一定要用 `hureru/octopus`**（带站点功能的版本）。如果你用的是 `bestrui/octopus` 等原版镜像，是看不到"站点"页面的。Release 二进制、源码编译方式见 [README.md](README.md)。
 
 ### 4.2 首次登录
 
@@ -396,7 +396,7 @@ base_url = "http://127.0.0.1:8080/v1"
 { "OPENAI_API_KEY": "sk-octopus-xxxx" }
 ```
 
-> 更多客户端示例见 [README_zh.md 客户端接入](README_zh.md)。
+> 更多客户端示例见 [README.md 客户端接入](README.md)。
 
 ---
 
