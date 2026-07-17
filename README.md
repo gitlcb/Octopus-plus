@@ -2,7 +2,7 @@
 
 <img src="web/public/logo.svg" alt="Octopus Logo" width="120" height="120">
 
-### Octopus
+### Octopus-plus
 
 **A Simple, Beautiful, and Elegant LLM API Aggregation & Load Balancing Service for Individuals**
 
@@ -10,7 +10,7 @@
 
 </div>
 
-> Forked from [bestruirui/octopus](https://github.com/bestruirui/octopus) — see [Differences from Upstream](#-differences-from-upstream) for what this fork changes.
+> **Octopus-plus** is a fork of [Hureru/octopus](https://github.com/Hureru/octopus) (itself forked from [bestruirui/octopus](https://github.com/bestruirui/octopus)). The complete source code of this fork is published here in compliance with the **GNU AGPL-3.0** license — see [License](#-license). For what the Hureru fork changed vs. its upstream, see [Differences from Upstream](#-differences-from-upstream).
 
 
 ## ✨ Features
@@ -411,4 +411,20 @@ Compatible with [bestruirui/octopus](https://github.com/bestruirui/octopus), ~18
 ## 🔗 Friend Links
 
 - 🐧 [LinuxDO](https://linux.do) - A community for tech enthusiasts
+
+## 📄 License
+
+This project is licensed under the **[GNU Affero General Public License v3.0](LICENSE)** (AGPL-3.0), inherited from its upstream projects:
+
+- Upstream: [Hureru/octopus](https://github.com/Hureru/octopus) (AGPL-3.0)
+- Original: [bestruirui/octopus](https://github.com/bestruirui/octopus)
+
+What this means for this fork and anyone using it:
+
+- ✅ You are free to use, study, modify, and redistribute this software.
+- 📤 If you distribute modified versions, you **must** release them under AGPL-3.0 with full source code.
+- 🌐 If you run a modified version as a **network service**, you **must** offer its complete source code to the users of that service (AGPL §13).
+- ©️ Original copyright and license notices must be preserved.
+
+All modifications made in Octopus-plus are published in this repository under the same AGPL-3.0 terms. To see the changes vs. upstream: add `https://github.com/Hureru/octopus` as `upstream` and run `git log upstream/master..HEAD`.
 

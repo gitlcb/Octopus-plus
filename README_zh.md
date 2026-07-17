@@ -2,7 +2,7 @@
 
 <img src="web/public/logo.svg" alt="Octopus Logo" width="120" height="120">
 
-### Octopus
+### Octopus-plus
 
 **为个人打造的简单、美观、优雅的 LLM API 聚合与负载均衡服务**
 
@@ -10,7 +10,7 @@
 
 </div>
 
-> 本项目 Fork 自 [bestruirui/octopus](https://github.com/bestruirui/octopus)，与上游的差异见 [与上游的差异](#-与上游的差异)。
+> **Octopus-plus** Fork 自 [Hureru/octopus](https://github.com/Hureru/octopus)（其本身 Fork 自 [bestruirui/octopus](https://github.com/bestruirui/octopus)）。本 Fork 遵循 **GNU AGPL-3.0** 开源协议，完整源代码在本仓库公开——详见 [开源协议](#-开源协议)。Hureru Fork 相对其上游的改动见 [与上游的差异](#-与上游的差异)。
 
 
 ## ✨ 特性
@@ -413,3 +413,19 @@ base_url = "http://127.0.0.1:8080/v1"
 ## 🔗 友链
 
 - 🐧 [LinuxDO](https://linux.do) - 真正的技术社区
+
+## 📄 开源协议
+
+本项目采用 **[GNU Affero 通用公共许可证 v3.0](LICENSE)**（AGPL-3.0），继承自上游项目：
+
+- 上游：[Hureru/octopus](https://github.com/Hureru/octopus)（AGPL-3.0）
+- 原始项目：[bestruirui/octopus](https://github.com/bestruirui/octopus)
+
+这对本 Fork 及所有使用者意味着：
+
+- ✅ 可以自由使用、学习、修改和再分发本软件。
+- 📤 分发修改版本时，**必须**以 AGPL-3.0 协议开源完整源代码。
+- 🌐 以**网络服务**形式运行修改版本时，**必须**向该服务的用户提供完整源代码（AGPL 第 13 条）。
+- ©️ 必须保留原始版权与许可声明。
+
+Octopus-plus 的全部修改均以同样的 AGPL-3.0 条款在本仓库公开。查看相对上游的改动：添加远端 `https://github.com/Hureru/octopus` 为 `upstream` 后执行 `git log upstream/master..HEAD`。
