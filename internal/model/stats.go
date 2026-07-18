@@ -55,6 +55,24 @@ type StatsSiteModelHourly struct {
 	StatsMetrics
 }
 
+// StatsDimHourly 按 小时 × 渠道 × 模型 × APIKey 维度聚合的请求统计，
+// 供多维度统计页的时间趋势、分布与交叉堆叠使用。
+// 复合主键决定粒度；Date 冗余存本地日用于天粒度 GROUP BY；ChannelName/APIKeyName
+// 为快照列（渠道/Key 删除后仍可展示历史名称）。
+type StatsDimHourly struct {
+	Hour        int    `json:"hour" gorm:"primaryKey;autoIncrement:false"` // epoch 秒 / 3600
+	ChannelID   int    `json:"channel_id" gorm:"primaryKey"`
+	ModelName   string `json:"model_name" gorm:"primaryKey;type:varchar(128)"`
+	APIKeyID    int    `json:"api_key_id" gorm:"primaryKey"`
+	Date        string `json:"date" gorm:"not null;type:varchar(8);index:idx_stats_dim_date"` // 本地日 20060102
+	ChannelName string `json:"channel_name" gorm:"type:varchar(128)"`
+	APIKeyName  string `json:"api_key_name" gorm:"type:varchar(128)"`
+	StatsMetrics
+	CacheReadToken  int64 `json:"cache_read_token" gorm:"bigint"`
+	CacheWriteToken int64 `json:"cache_write_token" gorm:"bigint"`
+	FtutTime        int64 `json:"ftut_time" gorm:"bigint"` // 首字耗时总和(ms)，除以成功数得均值
+}
+
 // Add aggregates another StatsMetrics into the current one.
 func (s *StatsMetrics) Add(delta StatsMetrics) {
 	s.InputToken += delta.InputToken

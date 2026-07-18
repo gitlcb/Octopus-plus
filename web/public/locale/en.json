@@ -45,6 +45,7 @@
     },
     "navbar": {
         "home": "Home",
+        "stats": "Stats",
         "site": "Site",
         "channel": "Channel",
         "group": "Group",
@@ -52,6 +53,49 @@
         "model": "Price",
         "log": "Log",
         "setting": "Setting"
+    },
+    "stats": {
+        "range": {
+            "today": "Today",
+            "last7Days": "7 Days",
+            "last30Days": "30 Days",
+            "last90Days": "90 Days"
+        },
+        "dimension": {
+            "model": "By Model",
+            "channel": "By Channel",
+            "apikey": "By Key"
+        },
+        "metric": {
+            "cost": "Cost",
+            "requests": "Requests",
+            "tokens": "Tokens",
+            "latency": "Latency"
+        },
+        "kpi": {
+            "requests": "Requests",
+            "successRate": "Success",
+            "cost": "Total Cost",
+            "failed": "Failed",
+            "tokens": "Total Tokens",
+            "cache": "Cache",
+            "avgLatency": "Avg Latency",
+            "avgFtut": "Avg TTFT"
+        },
+        "chart": {
+            "trend": "Trend",
+            "stacked": "Stacked by Dimension",
+            "breakdown": "Breakdown"
+        },
+        "table": {
+            "name": "Name",
+            "requests": "Requests",
+            "successRate": "Success",
+            "tokens": "Tokens",
+            "cost": "Cost",
+            "avgLatency": "Avg Latency"
+        },
+        "empty": "No data"
     },
     "toolbar": {
         "popover": {

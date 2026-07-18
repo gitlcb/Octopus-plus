@@ -159,6 +159,26 @@ func (m *RelayMetrics) SaveWithChannelStats(ctx context.Context, success bool, e
 	}
 	op.StatsSiteModelHourlyRecordAttempts(attempts, m.ActualModel)
 
+	// 多维度统计打点：小时 × 渠道 × 模型 × APIKey。
+	// channelID=0（失败无最终渠道）照常记录，避免失败请求在分布中消失。
+	{
+		var apiKeyName string
+		if apiKey, getErr := op.APIKeyGet(m.APIKeyID, ctx); getErr == nil {
+			apiKeyName = apiKey.Name
+		}
+		var cacheRead, cacheWrite, ftut int64
+		if m.CacheReadTokens != nil {
+			cacheRead = int64(*m.CacheReadTokens)
+		}
+		if m.CacheWriteTokens != nil {
+			cacheWrite = int64(*m.CacheWriteTokens)
+		}
+		if !m.FirstTokenTime.IsZero() {
+			ftut = m.FirstTokenTime.Sub(m.StartTime).Milliseconds()
+		}
+		op.StatsDimUpdate(channelID, channelName, m.ActualModel, m.APIKeyID, apiKeyName, globalStats, cacheRead, cacheWrite, ftut)
+	}
+
 	// 上游未上报 usage（或输入侧全为 0）时打告警，便于定位是哪个通道缺失 usage。
 	if success && (m.InternalResponse == nil || m.InternalResponse.Usage == nil ||
 		m.InternalResponse.Usage.EffectiveInputTokens() == 0) {

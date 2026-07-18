@@ -29,6 +29,7 @@ const (
 	SettingKeyProjectedChannelAutoGroupEnabled SettingKey = "projected_channel_auto_group_enabled" // 全局站点投影渠道自动分组模式（0关闭/1模糊/2精确/3正则，兼容旧 true/false）
 	SettingKeyJWTSecret                        SettingKey = "jwt_secret"                           // JWT 签名密钥（自动生成）
 	SettingKeyStatsSiteModelBackfilled         SettingKey = "stats_site_model_backfilled"          // 站点渠道小时聚合是否已回填历史日志
+	SettingKeyStatsDimBackfilled               SettingKey = "stats_dim_backfilled"                 // 多维度小时聚合是否已回填历史日志
 	SettingKeyOutlierRetireEnabled             SettingKey = "outlier_retire_enabled"               // 被动离群退役(POR)总开关
 	SettingKeyOutlierRetireInterval            SettingKey = "outlier_retire_interval"              // POR 任务轮询间隔(分钟)
 	SettingKeyOutlierWindowCapacity            SettingKey = "outlier_window_capacity"              // POR 滚动窗口评估样本上限(≤20)
@@ -69,6 +70,7 @@ func DefaultSettings() []Setting {
 		{Key: SettingKeyProjectedChannelAutoGroupEnabled, Value: "0"}, // 默认不强制站点投影渠道自动分组
 		{Key: SettingKeyJWTSecret, Value: ""},                         // 为空时自动生成
 		{Key: SettingKeyStatsSiteModelBackfilled, Value: "false"},
+		{Key: SettingKeyStatsDimBackfilled, Value: "false"},
 		{Key: SettingKeyOutlierRetireEnabled, Value: "false"}, // 默认关闭被动离群退役，保守上线
 		{Key: SettingKeyOutlierRetireInterval, Value: "2"},    // 默认每 2 分钟评估一次
 		{Key: SettingKeyOutlierWindowCapacity, Value: "20"},   // 评估取最近 20 条
@@ -113,7 +115,7 @@ func (s *Setting) Validate() error {
 			return fmt.Errorf("setting value must be non-negative")
 		}
 		return nil
-	case SettingKeyRelayLogKeepEnabled, SettingKeyResponsesWSEnabled, SettingKeyGroupHealthEnabled, SettingKeyStatsSiteModelBackfilled, SettingKeyOutlierRetireEnabled:
+	case SettingKeyRelayLogKeepEnabled, SettingKeyResponsesWSEnabled, SettingKeyGroupHealthEnabled, SettingKeyStatsSiteModelBackfilled, SettingKeyStatsDimBackfilled, SettingKeyOutlierRetireEnabled:
 		if s.Value != "true" && s.Value != "false" {
 			return fmt.Errorf("setting value must be true or false")
 		}

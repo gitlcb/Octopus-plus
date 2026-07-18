@@ -221,6 +221,13 @@ func persistStatsSnapshots(
 		return err
 	}
 
+	if err := StatsDimSaveDB(ctx); err != nil {
+		return err
+	}
+	if err := StatsDimCleanup(ctx); err != nil {
+		log.Warnw("stats_dim.cleanup_failed", "err", err)
+	}
+
 	return nil
 }
 

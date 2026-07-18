@@ -45,6 +45,7 @@
     },
     "navbar": {
         "home": "主頁",
+        "stats": "統計",
         "site": "站點",
         "channel": "供應源",
         "group": "分組",
@@ -52,6 +53,49 @@
         "model": "價格",
         "log": "日誌",
         "setting": "設定"
+    },
+    "stats": {
+        "range": {
+            "today": "今日",
+            "last7Days": "近7天",
+            "last30Days": "近30天",
+            "last90Days": "近90天"
+        },
+        "dimension": {
+            "model": "按模型",
+            "channel": "按供應源",
+            "apikey": "按金鑰"
+        },
+        "metric": {
+            "cost": "費用",
+            "requests": "請求數",
+            "tokens": "Token",
+            "latency": "耗時"
+        },
+        "kpi": {
+            "requests": "總請求",
+            "successRate": "成功率",
+            "cost": "總費用",
+            "failed": "失敗",
+            "tokens": "總 Token",
+            "cache": "快取",
+            "avgLatency": "平均耗時",
+            "avgFtut": "平均首字"
+        },
+        "chart": {
+            "trend": "趨勢",
+            "stacked": "維度堆疊",
+            "breakdown": "分佈"
+        },
+        "table": {
+            "name": "名稱",
+            "requests": "請求",
+            "successRate": "成功率",
+            "tokens": "Token",
+            "cost": "費用",
+            "avgLatency": "平均耗時"
+        },
+        "empty": "暫無資料"
     },
     "toolbar": {
         "popover": {

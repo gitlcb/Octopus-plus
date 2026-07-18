@@ -177,3 +177,53 @@ export function useStatsAPIKey() {
         refetchInterval: 30000,
     });
 }
+
+/**
+ * 多维度统计
+ */
+export type StatsDimGroupBy = 'none' | 'model' | 'channel' | 'apikey';
+export type StatsDimBucket = 'hour' | 'day' | 'total';
+
+export interface StatsDimRow extends StatsMetrics {
+    time?: number;
+    date?: string;
+    key: string;
+    label: string;
+    cache_read_token: number;
+    cache_write_token: number;
+    ftut_time: number;
+}
+
+export interface StatsDimResponse {
+    bucket: StatsDimBucket;
+    group_by: StatsDimGroupBy;
+    rows: StatsDimRow[];
+}
+
+export interface StatsDimParams {
+    groupBy: StatsDimGroupBy;
+    bucket: StatsDimBucket;
+    from: number; // unix 秒
+    to: number;   // unix 秒
+    limit?: number;
+}
+
+/**
+ * 通用多维度聚合 Hook。派生指标(成功率/均耗时/均首字)在消费端按需计算。
+ */
+export function useStatsDimension(params: StatsDimParams) {
+    const query: Record<string, string | number> = {
+        group_by: params.groupBy,
+        bucket: params.bucket,
+        from: params.from,
+        to: params.to,
+    };
+    if (params.limit) query.limit = params.limit;
+    return useQuery({
+        queryKey: ['stats', 'dimension', params],
+        queryFn: async () => {
+            return apiClient.get<StatsDimResponse>('/api/v1/stats/dimension', query);
+        },
+        refetchInterval: 60000,
+    });
+}
